@@ -1,0 +1,119 @@
+#:kivy 2.3.0
+
+#global parameters for widgets
+<MDFloatingActionButton>:
+    type: "standard"
+    md_bg_color: "grey"
+
+#design of screens
+<HomeScreen>:
+    MDBoxLayout:
+        padding: [50]
+        orientation: "vertical"
+        adaptative_size: True
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, .3)
+            MDLabel:
+                text: "YouDL"
+                halign: "center"
+                font_name: "londrina"
+                font_size: "90sp"
+                pos_hint: {"center_x": .5, "center_y": .5}
+            Image:
+                source: "data/youtube.png" #source: sadly I don't remember
+                size_hint: (.3, .3)
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "30dp"
+            size_hint: (1, .6)
+            MDLabel:
+                text: "Download music from YouTube\nEnter URL to start."
+                font_name: "gaegu"
+                font_size: "30sp"
+                halign: "center"
+            MDTextField:
+                id: input
+                mode: "round"
+                font_name: "gaegu"
+                hint_text: "Paste URL"
+                font_name_hint_text: "gaegu"
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDFloatingActionButton:
+                icon: "download"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_press: root.get_url()
+
+<ValidationScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: [50]
+        adaptative_size: True
+        MDLabel:
+            text: "Do you want to download audio for :"
+            font_size: "30sp"
+            halign: "center"
+            size_hint: (1, .2)
+        MDBoxLayout:
+            orientation: "vertical"
+            MDLabel:
+                id: video_title
+                halign: "center"
+                font_name: "roboto"
+                font_size: "30sp"
+            AsyncImage:
+                id: thumbnail
+                fit_mode: "contain"
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint: (1, .3)
+                pos_hint: {"center_x": .5, "center_y": .5}
+                MDFloatingActionButton:
+                    id: yes
+                    icon: "thumb-up"
+                    on_press: root.download_audio()
+                MDFloatingActionButton:
+                    id: no
+                    icon: "thumb-down"
+                    on_press: root.manager.current = "home_screen"
+                    
+<DownloadScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: [50]
+        adaptative_size: True
+        MDLabel:
+            text: "Download successful.\nFile in the Download folder."
+            font_name: "gaegu"
+            font_size: "30sp"
+            halign: "center"
+            size_hint_y: .4
+        AsyncImage:
+            id: thumbnail
+            fit_mode: "contain"
+        MDLabel:
+            id: file_name
+            font_name: "roboto"
+            font_size: "20sp"
+            size_hint_y: .3
+        MDFloatingActionButton:
+            icon: "home"
+            on_press: root.manager.current = "home_screen"
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+<ErrorScreen>:
+    MDBoxLayout:
+        adaptative_size: True
+        orientation: "vertical"
+        padding: [50]
+        MDLabel:
+            text: "An error occured, try again.\If error persists, contact developper."
+            font_size: "50sp"
+            halign: "center"
+        MDTextButton:
+            text: "Home"
+            on_press: root.manager.current = "home_screen"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint: (.5, 1)
